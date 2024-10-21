@@ -3,6 +3,24 @@ body {
     background-size: cover;
 }
 
-table.center { margin-left: auto; margin-right: auto;
+.T1 {
+ margin-left: auto;
+ margin-right: auto;
+}
 
+h1,
+h2,
+h3,
+p,
+ul,
+div {
+    text-align: center;
+}
+h3 {
+    color: rgba(14, 188, 51, 0.471);
+    font-size: 50px;
+}
+#nav {
+    margin-left: auto;
+    margin-right: auto;
 }
