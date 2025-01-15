@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery List</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css"> 
+    <style> 
+        .card {
+            background-color: lightblue; 
+        } 
+        body {
+    background-color: rgb(8, 164, 172) !important; 
+} 
+        
+    </style> <!--changed the background color of the card div to be more appealing-->
+            <!--used "!important" to prioritize custom styling over bootstrap styling-->
+    
+</head>
+<body class="container">
+    <br> 
+
+    <div class="card"> 
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="Grocery Item">Grocery Item</label>
+                        <input type="text" class="form-control" id="new-grocery-item">                                         
+                                                                       
+                    </div> <!--arranged the collumns to be in one simple row with button on end-->
+                </div>
+                <div class="col-sm">
+                    <label for="Item Brand">Brand</label>
+                        <input type="text" class="form-control" id="item-brand">
+                </div>
+                <div class="col-sm">
+                    <label for="number-of-items-needed">Number to buy</label>
+                    <input type="number" class="form-control" id="item-quantity">                    
+                </div>
+                <div class="col-sm">
+                    <br>
+                    <button id="Add" class="btn btn-primary">Add Item</button> 
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <table id="list" class="table table-dark table-striped"> <!--table formatting-->
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Brand</th>
+                <th>Quantity</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+    <script src="index.js"></script>
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+</body>
+</html>
