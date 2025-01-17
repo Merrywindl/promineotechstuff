@@ -2,7 +2,6 @@ let id =0;
 
 
 document.getElementById(`Add`).addEventListener(`click`, () => { //event listener that relies on user clicking button to add grocery item
-    let createDate = new Date();
     let table = document.getElementById(`list`);
     let row = table.insertRow(table.rows.length); //adds a new row at the end of the list of rows
     row.setAttribute(`id`, `item-${id}`);
@@ -27,15 +26,30 @@ function createDeleteButton(id) {
     return btn;
 }
 
+let messages = [
+    'Yesss',
+    'Do it!',
+    'Click me!!',
+    // Add more messages as needed or wanted
+  ];
+
+  function displayRandomMessage() {
+    // Select a random index for the message
+    let randomIndex = Math.floor(Math.random() * messages.length);
+  
+    // Display the random message in the button's innerHTML
+    buttonFun.innerHTML = messages[randomIndex];
+  }
+
 // Selects my existing button element by its id
 let buttonFun = document.getElementById('Add');
 
 // Change text on mouse hover
-buttonFun.addEventListener('mouseover', () => {
-    buttonFun.innerText = 'YES';
-});
+buttonFun.addEventListener('mouseover', displayRandomMessage);
+
 
 // Change text back when not hovering mouse over button
 buttonFun.addEventListener('mouseout', () => {
     buttonFun.innerText = 'Add';
 });
+
