@@ -5,6 +5,7 @@ const boardElement = document.getElementById('board');
 const statusElement = document.getElementById('status');
 const alertElement = document.getElementById('alert');
 const restartButton = document.getElementById('restart');
+const newGameButton = document.getElementById(`newGame`);
 let playerXRename = document.getElementById(`player1`);
 let playerORename = document.getElementById(`player2`);
 
@@ -12,6 +13,28 @@ function names () {
   playerXRename.innerText = playerX;
   playerORename.innerText = playerO;
 }
+
+newGameButton.onclick = () => {
+  // Show the player name inputs and start button
+  playerXInput.style.display = 'inline';
+  playerOInput.style.display = 'inline';
+  startButton.style.display = 'inline';
+  restartButton.style.display = 'none';
+  newGameButton.style.display = 'none';
+  boardElement.style.display = 'none';
+  
+  // Reset the player name displays
+  playerXRename.style.display = 'none';
+  playerORename.style.display = 'none';
+  
+  // Reset the game state
+  board = ['', '', '', '', '', '', '', '', ''];
+  gameActive = true;
+  currentPlayer = 'X';
+  statusElement.textContent = '';
+  alertElement.style.display = 'none';
+  renderBoard(); // Update the board to show empty cells
+};
 
 
 let board = ['', '', '', '', '', '', '', '', ''];
@@ -98,6 +121,7 @@ const startGame = () => {
     renderBoard();
     boardElement.style.display = 'grid';
     restartButton.style.display = 'inline';
+    newGameButton.style.display = 'inline';
 };
 
 const handleCellClick = (index) => {
@@ -116,9 +140,10 @@ const checkResult = () => {
     const [a, b, c] = winningConditions[i];
     if (board[a] === board[b] && board[b] === board[c] && board[a] !== '') {
       gameActive = false;
-      alertElement.textContent = `${currentPlayer === 'X' ? playerX : playerO} Wins!`;
+      alertElement.textContent = `${storedPlayer === 'X' ? playerX : playerO} Wins!`;
       alertElement.classList.add('alert-success');
       alertElement.style.display = 'block';
+      
       return;
     }
   }
