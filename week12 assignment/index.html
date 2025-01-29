@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/week12 assignment/css/styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">To-Do List</h1>
+        <div class="input-group mb-3">
+          <form id="todoForm">
+            <input
+              type="text"
+              id="newTodo"
+              class="form-control"
+              placeholder="Funkname"
+              required
+            />
+            <input type="text"
+                id="funkoId"
+                class="form-control"
+                placeholder="funko ID #"
+                required
+                />
+            <button class="btn btn-primary" id="addFunko" type="submit">
+              Add
+            </button>
+          </form>
+        </div>
+        <ul class="list-group" id="todoList">
+          <!-- To-Do items will be appended here -->
+           <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <span class="todo-text completed">completed</span>
+            <div>
+              <button class="btn btn-sm btn-secondary editTodo" data-index="1">
+                Edit
+              </button>
+              <button class="btn btn-sm btn-success toggleTodo" data-index="1">
+                Complete
+              </button>
+              <button
+                class="btn btn-sm btn-danger deleteTodo"
+                data-index="${index}"
+              >
+                Delete
+              </button>
+            </div>
+          </li>
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <span class="todo-text completed">Walk the dog</span>
+            <div>
+              <button class="btn btn-sm btn-secondary editTodo" data-index="1">
+                Edit
+              </button>
+              <button class="btn btn-sm btn-success toggleTodo" data-index="1">
+                Complete
+              </button>
+              <button
+                class="btn btn-sm btn-danger deleteTodo"
+                data-index="${index}"
+              >
+                Delete
+              </button>
+            </div>
+          </li>
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <span class="todo-text">Clean my room</span>
+            <div>
+              <button class="btn btn-sm btn-secondary editTodo" data-index="1">
+                Edit
+              </button>
+              <button class="btn btn-sm btn-success toggleTodo" data-index="1">
+                Incomplete
+              </button>
+              <button
+                class="btn btn-sm btn-danger deleteTodo"
+                data-index="${index}"
+              >
+                Delete
+              </button>
+            </div>
+          </li> 
+        </ul>
+      </div>
+
+
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+</body>
+</html>
