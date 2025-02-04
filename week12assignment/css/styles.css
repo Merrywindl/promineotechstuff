@@ -42,7 +42,7 @@ h1 {
   
   font-size: 6em; 
     background: linear-gradient(red, orange, yellow, green, purple);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 

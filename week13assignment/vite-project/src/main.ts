@@ -1,3 +1,17 @@
+import "./style.css";
+import $ from 'jquery';
+import "../node_modules/bootstrap/dist/css/bootstrap.css";
+import "../node_modules/bootstrap/dist/js/bootstrap.js"
+
+
+interface funko {
+    id: number;           
+    text?: string;        
+    number?: number;      
+    acquired: boolean;    
+}
+
+
 $(document).ready(function () {
     // Base URL for the API
     const BASE_URL = "http://localhost:4000";
@@ -9,13 +23,13 @@ $(document).ready(function () {
     }
 
     // Function to get a funko by its ID
-    function fetchfunko(id) {
+    function fetchfunko(id: number) {
         return fetch(BASE_URL + "/funkos/" + id)
             .then(response => response.json());
     }
 
     // Function to add a new funko
-    function addFunko(text, number) {
+    function addFunko(text: string, number: number) {
         return fetch(BASE_URL + "/funkos", {
             method: "POST",
             headers: {
@@ -30,7 +44,7 @@ $(document).ready(function () {
         fetchfunkos().then(funkos => {
             $("#funkoList").empty(); // Clear the existing list
 
-            funkos.forEach(function (funko) {
+            funkos.forEach(function (funko: funko) {
                 let funkoItem = `<li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="funko-text ${funko.acquired ? "acquired" : ""}">${funko.text} (# ${funko.number})</span>
                     <div>

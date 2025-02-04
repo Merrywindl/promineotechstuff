@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.acquired {
+  text-decoration: line-through;
+  color: gray;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+#addFunko {
+  width: 18%;
+}
+
+
+
+body {
+  background-color: blue !important; 
+  
+}
+input {
+background-color: blue !important;
+border-color: brown !important;
+border-radius: 30px !important;
+border-width: thick !important;
+}
+li {
+background-color: blue !important;
+border-color: brown !important;
+border-radius: 30px !important;
+border-width: thick !important;
+
+}
+h1 {
+
+font-size: 6em; 
+  background: linear-gradient(red, orange, yellow, green, purple);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+

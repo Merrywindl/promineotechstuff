@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center">FunkoPop Inventory</h1>
+      <div class="input-group mb-3">
+        <form id="funkoForm">
+          <input
+            type="text"
+            id="newfunko"
+            class="form-control"
+            placeholder="Funkname"
+            required
+          />
+          <input type="number"
+              id="newFunkoNumber"
+              class="form-control"
+              placeholder="funko ID #"
+              required
+              />
+          <button class="btn btn-primary" id="addFunko" type="submit">
+            Add
+          </button>
+        </form>
+      </div>
+      <ul class="list-group" id="funkoList">
+        
+      </ul>
+    </div>
+    <script type="module" src="src/main.ts"></script>
+  </body>
+</html>
