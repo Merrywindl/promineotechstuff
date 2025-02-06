@@ -1,138 +1,136 @@
-import "./style.css";
-import $ from 'jquery';
-import "../node_modules/bootstrap/dist/css/bootstrap.css";
-import "../node_modules/bootstrap/dist/js/bootstrap.js";
-
-
-interface Funko {
-    id: number;
-    text?: string;
-    number?: number;
-    acquired: boolean;
-}
-
 $(document).ready(function () {
-    // Base URL for the API
-    const BASE_URL = "http://localhost:5173";
+  // Base URL for the API
+  const BASE_URL = "http://localhost:4000";
+  const FUNKO_LIST_SELECTOR = "#funkoList";
+  const NEW_FUNKO_INPUT_SELECTOR = "#newfunko";
+  const NEW_FUNKO_NUMBER_INPUT_SELECTOR = "#newFunkoNumber";
+  const ADD_FUNKO_BUTTON_SELECTOR = "#addFunko";
 
-    // Function to get all funkos from the database
-    function fetchFunkos() {
-        return fetch(BASE_URL + "/funkos")
-            .then(response => response.json());
-    }
+  // Fetch all funkos
+  const fetchFunkos = () => {
+      return fetch(`${BASE_URL}/funkos`)
+          .then(response => response.json())
+          .catch(error => console.error("Error fetching funkos:", error));
+  }
 
-    // Function to get a funko by its ID
-    function fetchFunko(id: number) {
-        return fetch(BASE_URL + "/funkos/" + id)
-            .then(response => response.json());
-    }
+  // Add a new funko
+  const addFunko = (text, number) => {
+      return fetch(`${BASE_URL}/funkos`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ text, number, acquired: false }),
+      })
+      .then(response => response.json())
+      .catch(error => console.error("Error adding funko:", error));
+  }
 
-    // Function to add a new funko
-    function addFunko(text: string, number: number) {
-        return fetch(BASE_URL + "/funkos", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ text: text, number: number, acquired: false }),
-        }).then(response => response.json());
-    }
+  // Delete a funko
+  const deleteFunko = (id) => {
+      return fetch(`${BASE_URL}/funkos/${id}`, {
+          method: "DELETE",
+      })
+      .then(() => render())
+      .catch(error => console.error("Error deleting funko:", error));
+  }
 
-    // Function to render the funkos
-    function render() {
-        fetchFunkos().then(funkos => {
-            $("#funkoList").empty(); // Clear the existing list
+  // Toggle acquired status
+  const toggleFunko = (id) => {
+      return fetch(`${BASE_URL}/funkos/${id}`)
+          .then(response => response.json())
+          .then(funko => {
+              return fetch(`${BASE_URL}/funkos/${id}`, {
+                  method: "PUT",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ ...funko, acquired: !funko.acquired }),
+              });
+          })
+          .then(() => render())
+          .catch(error => console.error("Error toggling funko status:", error));
+  }
 
-            funkos.forEach(function (funko: Funko) {
-                let funkoItem = `<li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span class="funko-text ${funko.acquired ? "acquired" : ""}">${funko.text} (# ${funko.number})</span>
-                    <div>
-                        <button class="btn btn-sm btn-secondary editfunko" data-index="${funko.id}">Edit</button>
-                        <button class="btn btn-sm btn-success togglefunko" data-index="${funko.id}">${funko.acquired ? "Acquired" : "Not yet Acquired"}</button>
-                        <button class="btn btn-sm btn-danger deletefunko" data-index="${funko.id}">Delete</button>
-                    </div>
-                </li>`;
-                $("#funkoList").append(funkoItem); // Add the new funko item to the list
-            });
-        });
-    }
+  // Edit a funko
+  const editFunko = (id, funko) => {
+      return fetch(`${BASE_URL}/funkos/${id}`, {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(funko),
+      })
+      .then(() => render())
+      .catch(error => console.error("Error editing funko:", error));
+  }
 
-    // Call the render function when the page loads
-    render();
+  // Render funkos to the UI
+  const render = () => {
+      fetchFunkos().then(funkos => {
+          $(FUNKO_LIST_SELECTOR).empty(); // Clear existing list
 
-    // Event listener for adding a funko
-    $("#addFunko").click(function (event) {
-        event.preventDefault(); // Prevent the default form submission
+          funkos.forEach(funko => {
+              const funkoItem = `
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <span class="funko-text ${funko.acquired ? "acquired" : ""}">${funko.text} (# ${funko.number})</span>
+                      <div>
+                          <button class="btn btn-sm btn-secondary editfunko" data-index="${funko.id}">Edit</button>
+                          <button class="btn btn-sm btn-success togglefunko" data-index="${funko.id}">${funko.acquired ? "Acquired" : "Not yet Acquired"}</button>
+                          <button class="btn btn-sm btn-danger deletefunko" data-index="${funko.id}">Delete</button>
+                      </div>
+                  </li>`;
+              $(FUNKO_LIST_SELECTOR).append(funkoItem); // Add new funko item
+          });
+      });
+  }
 
-        const text = $("#newfunko").val(); // Get the new funko name
-        const number = $("#newFunkoNumber").val(); // Get the new funko number
+  // Call render on page load
+  render();
 
-        // Check if both fields are filled
-        if (text === "" || number === "") {
-            alert("Please enter both Funko name and number");
-            return; // Stop the function if validation fails
-        }
+  // Event listener for adding a funko
+  $(ADD_FUNKO_BUTTON_SELECTOR).click(function (event) {
+      event.preventDefault(); // Prevent form submission
 
-        // Convert number to a valid type
-        const numberValue = parseInt(number as string, 10);
+      const text = $(NEW_FUNKO_INPUT_SELECTOR).val().trim(); // Get funko name
+      const number = $(NEW_FUNKO_NUMBER_INPUT_SELECTOR).val().trim(); // Get funko number
 
-        // Check if numberValue is a valid number
-        if (isNaN(numberValue)) {
-            alert("Please enter a valid number");
-            return; // Stop the function if validation fails
-        }
+      if (!text || !number) {
+          alert("Please enter both Funko name and number");
+          return; // Stop if validation fails
+      }
 
-        // Add the funko to the server
-        addFunko(text as string, numberValue).then(() => {
-            render(); // Re-render the list after adding
-            $("#newfunko").val(""); // Clear the input fields
-            $("#newFunkoNumber").val(""); // Clear the input fields
-        });
-    });
+      addFunko(text, number).then(() => {
+          $(NEW_FUNKO_INPUT_SELECTOR).val(""); // Clear input
+          $(NEW_FUNKO_NUMBER_INPUT_SELECTOR).val(""); // Clear input
+      });
+  });
 
-    // Event listener for deleting a funko
-    $(document).on("click", ".deletefunko", function () {
-        const id = $(this).data("index"); // Get the id of the funko to delete
-        fetch(BASE_URL + "/funkos/" + id, {
-            method: "DELETE",
-        }).then(() => render()); // Re-render the list after deletion
-    });
+  // Event listener for deleting a funko
+  $(document).on("click", ".deletefunko", function () {
+      const id = $(this).data("index"); // Get funko ID
+      deleteFunko(id);
+  });
 
-    // Event listener for toggling acquired status
-    $(document).on("click", ".togglefunko", function () {
-        const id = $(this).data("index"); // Get the id of the funko
-        fetchFunko(id).then(funko => {
-            fetch(BASE_URL + "/funkos/" + id, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ ...funko, acquired: !funko.acquired }), // Toggle acquired status
-            }).then(() => render()); // Re-render the list after toggling
-        });
-    });
+  // Event listener for toggling acquired status
+  $(document).on("click", ".togglefunko", function () {
+      const id = $(this).data("index"); // Get funko ID
+      toggleFunko(id);
+  });
 
-    // Event listener for editing a funko
-    $(document).on("click", ".editfunko", function () {
-        const id = $(this).data("index"); // Get the id of the funko
-        fetchFunko(id).then(funko => {
-            const newText = prompt("Edit your Funko name:", funko.text); // Ask for new name
-            const newNumber = prompt("Edit your Funko number:", funko.number ? funko.number.toString() : ""); // Ask for new number
+  // Event listener for editing a funko
+  $(document).on("click", ".editfunko", function () {
+      const id = $(this).data("index"); // Get funko ID
+      fetch(`${BASE_URL}/funkos/${id}`)
+          .then(response => response.json())
+          .then(funko => {
+              const newText = prompt("Edit your Funko name:", funko.text);
+              const newNumber = prompt("Edit your Funko number:", funko.number);
 
-            if (newText !== null) {
-                const newNumberValue = parseInt(newNumber ?? "", 10);
-                if (isNaN(newNumberValue)) {
-                    alert("Please enter a valid number");
-                    return;
-                }
-                fetch(BASE_URL + "../funkos" + id, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ text: newText, number: newNumberValue, acquired: funko.acquired }), // Update the funko
-                }).then(() => render()); // Re-render the list after editing
-            }
-        });
-    });
+              if (newText !== null && newNumber !== null) {
+                  editFunko(id, { text: newText, number: newNumber, acquired: funko.acquired });
+              }
+          })
+          .catch(error => console.error("Error fetching funko:", error));
+  });
 });
