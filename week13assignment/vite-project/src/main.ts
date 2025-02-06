@@ -1,29 +1,28 @@
 import "./style.css";
 import $ from 'jquery';
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
-import "../node_modules/bootstrap/dist/js/bootstrap.js"
+import "../node_modules/bootstrap/dist/js/bootstrap.js";
 
 
-interface funko {
-    id: number;           
-    text?: string;        
-    number?: number;      
-    acquired: boolean;    
+interface Funko {
+    id: number;
+    text?: string;
+    number?: number;
+    acquired: boolean;
 }
-
 
 $(document).ready(function () {
     // Base URL for the API
-    const BASE_URL = "http://localhost:4000";
+    const BASE_URL = "http://localhost:5173";
 
     // Function to get all funkos from the database
-    function fetchfunkos() {
+    function fetchFunkos() {
         return fetch(BASE_URL + "/funkos")
             .then(response => response.json());
     }
 
     // Function to get a funko by its ID
-    function fetchfunko(id: number) {
+    function fetchFunko(id: number) {
         return fetch(BASE_URL + "/funkos/" + id)
             .then(response => response.json());
     }
@@ -41,10 +40,10 @@ $(document).ready(function () {
 
     // Function to render the funkos
     function render() {
-        fetchfunkos().then(funkos => {
+        fetchFunkos().then(funkos => {
             $("#funkoList").empty(); // Clear the existing list
 
-            funkos.forEach(function (funko: funko) {
+            funkos.forEach(function (funko: Funko) {
                 let funkoItem = `<li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="funko-text ${funko.acquired ? "acquired" : ""}">${funko.text} (# ${funko.number})</span>
                     <div>
@@ -74,8 +73,17 @@ $(document).ready(function () {
             return; // Stop the function if validation fails
         }
 
+        // Convert number to a valid type
+        const numberValue = parseInt(number as string, 10);
+
+        // Check if numberValue is a valid number
+        if (isNaN(numberValue)) {
+            alert("Please enter a valid number");
+            return; // Stop the function if validation fails
+        }
+
         // Add the funko to the server
-        addFunko(text, number).then(() => {
+        addFunko(text as string, numberValue).then(() => {
             render(); // Re-render the list after adding
             $("#newfunko").val(""); // Clear the input fields
             $("#newFunkoNumber").val(""); // Clear the input fields
@@ -93,7 +101,7 @@ $(document).ready(function () {
     // Event listener for toggling acquired status
     $(document).on("click", ".togglefunko", function () {
         const id = $(this).data("index"); // Get the id of the funko
-        fetchfunko(id).then(funko => {
+        fetchFunko(id).then(funko => {
             fetch(BASE_URL + "/funkos/" + id, {
                 method: "PUT",
                 headers: {
@@ -107,17 +115,22 @@ $(document).ready(function () {
     // Event listener for editing a funko
     $(document).on("click", ".editfunko", function () {
         const id = $(this).data("index"); // Get the id of the funko
-        fetchfunko(id).then(funko => {
+        fetchFunko(id).then(funko => {
             const newText = prompt("Edit your Funko name:", funko.text); // Ask for new name
-            const newNumber = prompt("Edit your Funko number:", funko.number); // Ask for new number
+            const newNumber = prompt("Edit your Funko number:", funko.number ? funko.number.toString() : ""); // Ask for new number
 
             if (newText !== null) {
-                fetch(BASE_URL + "/funkos/" + id, {
+                const newNumberValue = parseInt(newNumber ?? "", 10);
+                if (isNaN(newNumberValue)) {
+                    alert("Please enter a valid number");
+                    return;
+                }
+                fetch(BASE_URL + "../funkos" + id, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ text: newText, number: newNumber, acquired: funko.acquired }), // Update the funko
+                    body: JSON.stringify({ text: newText, number: newNumberValue, acquired: funko.acquired }), // Update the funko
                 }).then(() => render()); // Re-render the list after editing
             }
         });
