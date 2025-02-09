@@ -2,8 +2,8 @@ $(document).ready(function () {
     // Base URL for the API
     const BASE_URL = "http://localhost:4000";
     const FUNKO_LIST_SELECTOR = "#funkoList";
-    const NEW_FUNKO_INPUT_SELECTOR = "#newfunko";
-    const NEW_FUNKO_NUMBER_INPUT_SELECTOR = "#newFunkoNumber";
+    const newFunkoInput = "#newfunko";
+    const newFunkoNumberInput = "#newFunkoNumber";
     const ADD_FUNKO_BUTTON_SELECTOR = "#addFunko";
 
     // Fetch all funkos
@@ -65,7 +65,7 @@ $(document).ready(function () {
         .catch(error => console.error("Error editing funko:", error));
     }
 
-    // Render funkos to the UI
+    // Render funkos
     const render = () => {
         fetchFunkos().then(funkos => {
             $(FUNKO_LIST_SELECTOR).empty(); // Clear existing list
@@ -92,8 +92,8 @@ $(document).ready(function () {
     $(ADD_FUNKO_BUTTON_SELECTOR).click(function (event) {
         event.preventDefault(); // Prevent form submission
 
-        const text = $(NEW_FUNKO_INPUT_SELECTOR).val().trim(); // Get funko name
-        const number = $(NEW_FUNKO_NUMBER_INPUT_SELECTOR).val().trim(); // Get funko number
+        const text = $(newFunkoInput).val(); // Get funko name
+        const number = $(newFunkoNumberInput).val(); // Get funko number
 
         if (!text || !number) {
             alert("Please enter both Funko name and number");
@@ -101,8 +101,8 @@ $(document).ready(function () {
         }
 
         addFunko(text, number).then(() => {
-            $(NEW_FUNKO_INPUT_SELECTOR).val(""); // Clear input
-            $(NEW_FUNKO_NUMBER_INPUT_SELECTOR).val(""); // Clear input
+            $(newFunkoInput).val(""); // Clear input
+            $(newFunkoNumberInput).val(""); // Clear input
         });
     });
 

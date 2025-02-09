@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "json-server week12assignment/db/db.json --port 4000"
+    "start": "json-server db/db.json --port 4000"
   },
   "author": "",
   "license": "ISC",

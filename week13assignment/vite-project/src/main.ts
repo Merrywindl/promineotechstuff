@@ -1,20 +1,37 @@
+import "../node_modules/bootstrap/dist/css/bootstrap.css";
+import "../node_modules/bootstrap/dist/js/bootstrap.js";
+import "./style.css";
+import  $ from 'jquery';
+
+
+
+interface funkotype {
+  id: string;
+  text: string;
+  number: number;
+  acquired: boolean;
+}[]
+
+
 $(document).ready(function () {
   // Base URL for the API
   const BASE_URL = "http://localhost:4000";
-  const FUNKO_LIST_SELECTOR = "#funkoList";
-  const NEW_FUNKO_INPUT_SELECTOR = "#newfunko";
-  const NEW_FUNKO_NUMBER_INPUT_SELECTOR = "#newFunkoNumber";
+  const funkoListSelect = "#funkoList";
+  const newFunkoInput = "#newfunko";
+  const newFunkoNumberInput = "#newFunkoNumber";
   const ADD_FUNKO_BUTTON_SELECTOR = "#addFunko";
+  
+
 
   // Fetch all funkos
-  const fetchFunkos = () => {
+  const fetchFunkos = (): Promise<funkotype[]> => {
       return fetch(`${BASE_URL}/funkos`)
           .then(response => response.json())
           .catch(error => console.error("Error fetching funkos:", error));
   }
 
   // Add a new funko
-  const addFunko = (text, number) => {
+  const addFunko = (text: string | number | string[], number: string | number | string[]) => {
       return fetch(`${BASE_URL}/funkos`, {
           method: "POST",
           headers: {
@@ -24,10 +41,11 @@ $(document).ready(function () {
       })
       .then(response => response.json())
       .catch(error => console.error("Error adding funko:", error));
+      
   }
 
   // Delete a funko
-  const deleteFunko = (id) => {
+  const deleteFunko = (id: string) => {
       return fetch(`${BASE_URL}/funkos/${id}`, {
           method: "DELETE",
       })
@@ -36,7 +54,7 @@ $(document).ready(function () {
   }
 
   // Toggle acquired status
-  const toggleFunko = (id) => {
+  const toggleFunko = (id: string) => {
       return fetch(`${BASE_URL}/funkos/${id}`)
           .then(response => response.json())
           .then(funko => {
@@ -53,7 +71,7 @@ $(document).ready(function () {
   }
 
   // Edit a funko
-  const editFunko = (id, funko) => {
+  const editFunko = (id: string, funko: funkotype) => {
       return fetch(`${BASE_URL}/funkos/${id}`, {
           method: "PUT",
           headers: {
@@ -68,8 +86,8 @@ $(document).ready(function () {
   // Render funkos to the UI
   const render = () => {
       fetchFunkos().then(funkos => {
-          $(FUNKO_LIST_SELECTOR).empty(); // Clear existing list
-
+          $(funkoListSelect).empty(); // Clear existing list
+          console.log(funkos);
           funkos.forEach(funko => {
               const funkoItem = `
                   <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -80,7 +98,7 @@ $(document).ready(function () {
                           <button class="btn btn-sm btn-danger deletefunko" data-index="${funko.id}">Delete</button>
                       </div>
                   </li>`;
-              $(FUNKO_LIST_SELECTOR).append(funkoItem); // Add new funko item
+              $(funkoListSelect).append(funkoItem); // Add new funko item
           });
       });
   }
@@ -92,8 +110,8 @@ $(document).ready(function () {
   $(ADD_FUNKO_BUTTON_SELECTOR).click(function (event) {
       event.preventDefault(); // Prevent form submission
 
-      const text = $(NEW_FUNKO_INPUT_SELECTOR).val().trim(); // Get funko name
-      const number = $(NEW_FUNKO_NUMBER_INPUT_SELECTOR).val().trim(); // Get funko number
+      const text = $(newFunkoInput).val(); // Get funko name
+      const number = $(newFunkoNumberInput).val(); // Get funko number
 
       if (!text || !number) {
           alert("Please enter both Funko name and number");
@@ -101,9 +119,11 @@ $(document).ready(function () {
       }
 
       addFunko(text, number).then(() => {
-          $(NEW_FUNKO_INPUT_SELECTOR).val(""); // Clear input
-          $(NEW_FUNKO_NUMBER_INPUT_SELECTOR).val(""); // Clear input
+          $(newFunkoInput).val(""); // Clear input
+          $(newFunkoNumberInput).val(""); // Clear input
+          render();
       });
+      
   });
 
   // Event listener for deleting a funko
@@ -111,6 +131,8 @@ $(document).ready(function () {
       const id = $(this).data("index"); // Get funko ID
       deleteFunko(id);
   });
+
+  
 
   // Event listener for toggling acquired status
   $(document).on("click", ".togglefunko", function () {
@@ -125,10 +147,13 @@ $(document).ready(function () {
           .then(response => response.json())
           .then(funko => {
               const newText = prompt("Edit your Funko name:", funko.text);
-              const newNumber = prompt("Edit your Funko number:", funko.number);
+              const newNumber = Number(window.prompt("Edit your Funko number:", funko.number));
 
               if (newText !== null && newNumber !== null) {
-                  editFunko(id, { text: newText, number: newNumber, acquired: funko.acquired });
+                  editFunko(id, {
+                      text: newText, number: newNumber, acquired: funko.acquired,
+                      id: ""
+                  });
               }
           })
           .catch(error => console.error("Error fetching funko:", error));
