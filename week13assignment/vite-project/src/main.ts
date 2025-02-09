@@ -1,7 +1,7 @@
-import "../node_modules/bootstrap/dist/css/bootstrap.css";
-import "../node_modules/bootstrap/dist/js/bootstrap.js";
-import "./style.css";
-import  $ from 'jquery';
+import "../node_modules/bootstrap/dist/css/bootstrap.css"; //bootstrap styles
+import "../node_modules/bootstrap/dist/js/bootstrap.js"; //bootstrap
+import "./style.css"; //my custom styles
+import  $ from 'jquery'; //jquery library
 
 
 
@@ -10,12 +10,12 @@ interface funkotype {
   text: string;
   number: number;
   acquired: boolean;
-}[]
+}[] //interface to fix type errors
 
 
 $(document).ready(function () {
   // Base URL for the API
-  const BASE_URL = "http://localhost:4000";
+  const BASE_URL = "http://localhost:4000"; //json server "npm run start" vite "npm run dev"
   const funkoListSelect = "#funkoList";
   const newFunkoInput = "#newfunko";
   const newFunkoNumberInput = "#newFunkoNumber";
@@ -83,7 +83,7 @@ $(document).ready(function () {
       .catch(error => console.error("Error editing funko:", error));
   }
 
-  // Render funkos to the UI
+  // Render function
   const render = () => {
       fetchFunkos().then(funkos => {
           $(funkoListSelect).empty(); // Clear existing list
@@ -98,7 +98,7 @@ $(document).ready(function () {
                           <button class="btn btn-sm btn-danger deletefunko" data-index="${funko.id}">Delete</button>
                       </div>
                   </li>`;
-              $(funkoListSelect).append(funkoItem); // Add new funko item
+              $(funkoListSelect).append(funkoItem); // Add new funko item to visual
           });
       });
   }
