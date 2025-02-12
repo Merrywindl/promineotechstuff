@@ -1,4 +1,6 @@
 
+//set styling with text above the pictures and onClick event that displays text in alert which can be changed 
+
 export default function SlideThumbnail({slide} : {slide: {text: string, image: string}} ) {
     return (
         

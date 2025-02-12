@@ -1,5 +1,5 @@
 
-
+//inputfields for future work to add items dynamically
 
 export default function () {
     return (

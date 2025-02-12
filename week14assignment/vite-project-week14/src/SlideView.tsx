@@ -4,6 +4,8 @@ import thumbnailImage2 from "./assets/weatheringwithyou.jpg"
 import thumbnailImage3 from "./assets/yourname.jpg"
 import thumbnailImage4 from "./assets/COMING-SOON-.jpg"
 
+//data section with text and custom images using flexbox grid to make sure future additions do not slide off screen but stack instead
+
 const testSlides = [
     {
         id:0,        

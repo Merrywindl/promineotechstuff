@@ -1,8 +1,9 @@
 
+//navbar buttons
 
 type NavbarButtonProps = {
     icon: string, 
-    onClick: () => void
+    onClick: () => void 
     
 }
 

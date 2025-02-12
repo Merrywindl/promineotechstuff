@@ -1,6 +1,6 @@
 
 body {
-    background-image: url(https://images8.alphacoders.com/131/thumb-1920-1310791.png);
+    background-image: url(https://images8.alphacoders.com/131/thumb-1920-1310791.png); /* custom background image*/
     height: 100%;
   }
   
@@ -10,19 +10,19 @@ body {
 
   #inputID::placeholder {
     color: red;
-    text-align: center;
+    text-align: center; /*set placeholder text color*/
     
   }
 
   .flex-wrap {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /*for flex-grid wrap in SlideView*/
 }
 
 .d-flex {
-    display: flex;
+    display: flex; /*additional flex styling*/
 }
 h1 {
     font-weight: bolder;
-    color: black;
+    color: black; /*header styling*/
 }
