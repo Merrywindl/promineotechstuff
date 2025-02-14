@@ -7,7 +7,7 @@ type InfoBarProps = {
 
 
 export default function Rightinfobar({slide} : InfoBarProps) {
-    const [isExpanded, setIsExpanded] = useState(true)
+    const [isExpanded, setIsExpanded] = useState(false)
 
     const handleButtonClick = () => {
         setIsExpanded(!isExpanded)
