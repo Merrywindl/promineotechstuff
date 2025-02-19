@@ -1,0 +1,47 @@
+/*custom css styles */
+
+  
+  #root {
+    height: 100%;
+  }
+
+  #inputID::placeholder {
+    color: red;
+    text-align: center;
+    
+  }
+
+  .flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.d-flex {
+    display: flex;
+}
+h1 {
+    font-weight: bolder;
+    color: black;
+}
+
+ .modal-content {
+  background-color: grey;
+}
+
+.modal-backdrop {
+  background: gray;
+  
+}
+
+.modal-content {
+  align-items: center;
+  
+}
+
+.modal-body >div {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
