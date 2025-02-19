@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Sidebar2 from '../Sidebar2'; //created new components for styling on 2nd and 3rd pages
 import Rightinfobar2 from '../Rightinfobar2';
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function Rightinfobar2() {
   const [isExpanded, setIsExpanded] = useState(false);

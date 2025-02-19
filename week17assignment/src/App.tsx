@@ -7,10 +7,21 @@ import SlideView from "./SlideView";
 import Rightinfobar from "./Rightinfobar";
 import Music from "./pages/Music";
 import Games from "./pages/Games";
-import Footer from "./Footer";
+import Footer from "./footer";
+
+interface Slide {
+  id: number;
+  text: string;
+  image: string;
+  story: string;
+  fontColor: string;
+  updateslideFontColor: (newColor: string, idToUpdate?: number) => void;
+  
+}
 
 export default function App() {
-  const [slides, setSlides] = useState([]);
+
+  const [slides, setSlides] = useState<Slide[]>([]);
   const [selectedSlideId, setSelectedSlideId] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -112,13 +123,24 @@ export default function App() {
   );
 }
 
-function MoviesPage({ slides, selectedSlide, addBlankSlide, deleteSlide, updateslideFontColor, isSidebarExpanded, setIsSidebarExpanded, setSelectedSlideId }) {
+interface MoviesPageProps {
+  slides: Slide[];
+  selectedSlide: Slide | undefined;
+  addBlankSlide: (text: string, story: string, image: string, resetInputs: () => void) => void;
+  deleteSlide: (idToDelete: number) => void;
+  updateslideFontColor: (newColor: string, idToUpdate?: number) => void;
+  isSidebarExpanded: boolean;
+  setIsSidebarExpanded: (expanded: boolean) => void;
+  setSelectedSlideId: (id: number) => void;
+}
+
+function MoviesPage({ slides, selectedSlide, addBlankSlide, deleteSlide, isSidebarExpanded, setIsSidebarExpanded, setSelectedSlideId }: MoviesPageProps) {
   return (
     <>
       <ListField />
       <div className="d-flex flex-grow-1">
         <Sidebar addBlankSlide={addBlankSlide} isExpanded={isSidebarExpanded} setIsExpanded={setIsSidebarExpanded} />
-        <SlideView slides={slides} deleteSlide={deleteSlide} selectedSlideId={selectedSlide?.id} setSelectedSlideId={setSelectedSlideId} />
+        <SlideView slides={slides} deleteSlide={deleteSlide} selectedSlideId={selectedSlide?.id ?? 0} setSelectedSlideId={setSelectedSlideId} />
         <Rightinfobar slide={selectedSlide} />
       </div>
     </>

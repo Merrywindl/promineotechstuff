@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Sidebar2 from '../Sidebar2';
 import Rightinfobar2 from '../Rightinfobar2';
-import ListField from '../ListField';
 
 const Music = () => {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);

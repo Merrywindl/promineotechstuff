@@ -1,5 +1,4 @@
-// filepath: /c:/Users/whasu/OneDrive/Documents/coding/messing around/react testing/src/Sidebar2.tsx
-import React, { useState } from 'react';
+
 
 type Sidebar2Props = {
   isExpanded: boolean;
