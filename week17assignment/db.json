@@ -1,0 +1,53 @@
+{
+  "slides": [
+    {
+      "id": "0",
+      "text": "Suzume",
+      "image": "https://i.imgur.com/YIYoRb6.jpg",
+      "story": "abc",
+      "fontColor": "Black"
+    },
+    {
+      "id": "1",
+      "text": "Weathering With You",
+      "image": "https://i.imgur.com/kHZaavZ.jpg",
+      "story": "def",
+      "fontColor": "Black"
+    },
+    {
+      "id": "2",
+      "text": "Your Name",
+      "image": "https://i.imgur.com/PHgfHXD.jpg",
+      "story": "ghi",
+      "fontColor": "red"
+    },
+    {
+      "id": "2111",
+      "text": "Coming Soon",
+      "image": "https://i.imgur.com/v2LWZrn.jpg",
+      "story": "This is a story",
+      "fontColor": "Black"
+    },
+    {
+      "id": "21111",
+      "text": "Coming Soon",
+      "image": "https://i.imgur.com/v2LWZrn.jpg",
+      "story": "This is a story",
+      "fontColor": "Black"
+    },
+    {
+      "id": "211111",
+      "text": "Coming Soon",
+      "image": "https://i.imgur.com/v2LWZrn.jpg",
+      "story": "This is a story",
+      "fontColor": "Black"
+    },
+    {
+      "id": "2111111",
+      "text": "Coming Soon",
+      "image": "https://i.imgur.com/v2LWZrn.jpg",
+      "story": "This is a story",
+      "fontColor": "Black"
+    }
+  ]
+}
